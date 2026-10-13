@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: "Fredoka", "Plus Jakarta Sans", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #16171A;
+    color: #18191C;
+    overflow-x: hidden;
+  }
+}
+
+/* Matte anodized bead-blasted aluminum/polymer texture matching IMG_8382.jpeg */
+.chassis-surface {
+  background-color: #CECFD2;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.22) 1px, transparent 0),
+    radial-gradient(rgba(0, 0, 0, 0.045) 1px, transparent 0),
+    linear-gradient(180deg, #D5D6D8 0%, #CBCCCF 52%, #C4C5C8 100%);
+  background-size: 3px 3px, 5px 5px, 100% 100%;
+  background-position: 0 0, 1.5px 1.5px, 0 0;
+  box-shadow:
+    inset 0 2px 3px rgba(255, 255, 255, 0.7),
+    inset 0 -6px 14px rgba(0, 0, 0, 0.14),
+    0 28px 60px -12px rgba(0, 0, 0, 0.65),
+    0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+/* Top black OLED screen bezel and glass depth */
+.oled-screen-well {
+  background: linear-gradient(180deg, #0D0E10 0%, #15171A 35%, #090A0C 100%);
+  box-shadow:
+    inset 0 4px 12px rgba(0, 0, 0, 0.9),
+    inset 0 0 0 2px #1C1E22,
+    0 2px 0 rgba(255, 255, 255, 0.65);
+}
+
+/* Conical brushed aluminum rotary encoder knob */
+.rotary-knob-metal {
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    #EAEBED 0deg,
+    #B0B2B6 42deg,
+    #F5F6F8 88deg,
+    #9FA1A6 135deg,
+    #E6E7E9 180deg,
+    #A9ABB0 225deg,
+    #F7F8FA 270deg,
+    #9C9EA3 315deg,
+    #EAEBED 360deg
+  );
+  box-shadow:
+    0 8px 14px -2px rgba(0, 0, 0, 0.36),
+    0 3px 5px rgba(0, 0, 0, 0.25),
+    inset 0 1px 1.5px rgba(255, 255, 255, 0.9),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Tactile square mechanical keycaps */
+.tactile-key-well {
+  background-color: #1B1C1E;
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.55),
+    inset 0 2px 4px rgba(0, 0, 0, 0.85);
+}
+
+.tactile-key-orange {
+  background: linear-gradient(180deg, #F4631E 0%, #EA5610 100%);
+  box-shadow:
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.38),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.28),
+    0 3px 5px rgba(0, 0, 0, 0.35);
+}
+
+.tactile-key-orange:active,
+.tactile-key-orange.is-pressed {
+  transform: translateY(1.5px);
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.35),
+    0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.tactile-key-dark {
+  background: linear-gradient(180deg, #626468 0%, #54565A 100%);
+  box-shadow:
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.25),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.35),
+    0 3px 5px rgba(0, 0, 0, 0.35);
+}
+
+.tactile-key-dark:active,
+.tactile-key-dark.is-pressed {
+  transform: translateY(1.5px);
+}
+
+.tactile-key-mid {
+  background: linear-gradient(180deg, #84868A 0%, #74767A 100%);
+  box-shadow:
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.3),
+    0 3px 5px rgba(0, 0, 0, 0.32);
+}
+
+.tactile-key-mid:active,
+.tactile-key-mid.is-pressed {
+  transform: translateY(1.5px);
+}
+
+/* Study Buddy Face Matrix Module */
+.buddy-face-housing {
+  background: linear-gradient(180deg, #1B2737 0%, #15202E 100%);
+  box-shadow:
+    0 5px 10px rgba(0, 0, 0, 0.32),
+    0 1.5px 0 rgba(255, 255, 255, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.14),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.45);
+}
+
+/* Perforated Speaker Module */
+.speaker-module-housing {
+  background: linear-gradient(180deg, #9C9D9F 0%, #8E9093 100%);
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.28),
+    0 1.5px 0 rgba(255, 255, 255, 0.55),
+    inset 0 1px 1px rgba(255, 255, 255, 0.35),
+    inset 0 -2px 3px rgba(0, 0, 0, 0.25);
+}
+
+/* Custom subtle scrollbars inside OLED display */
+.oled-scroll::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.oled-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+}
+.oled-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 9999px;
+}
+.oled-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(242, 100, 25, 0.6);
+}
