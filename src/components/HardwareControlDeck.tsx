@@ -13,7 +13,7 @@ interface HardwareControlDeckProps {
   onRotateKnob: (direction: 1 | -1) => void;
   onSelectLed: (ledIndex: number) => void;
   onPressPlay: () => void;
-  onPressCamera: () => void;
+  onPressCamera?: () => void;
   onPressCalculator: () => void;
   onPressKeyboard: () => void;
   onPokeBuddy: () => void;
@@ -138,29 +138,6 @@ export const HardwareControlDeck: React.FC<HardwareControlDeckProps> = ({
                   <span className="w-0.5 h-1 bg-white/90 animate-bounce" />
                 </span>
               )}
-            </button>
-          </div>
-
-          {/* 2. Dark Grey Camera Button */}
-          <div className="w-full aspect-square p-[2px] rounded-[9px] tactile-key-well">
-            <button
-              type="button"
-              onClick={onPressCamera}
-              title="Open Camera & Handwriting Scanner"
-              aria-label="Open Camera to scan handwritten equations"
-              className={`w-full h-full rounded-[7px] tactile-key-dark flex items-center justify-center cursor-pointer transition-transform focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#EF5B14] ${
-                screenMode === "camera" ? "ring-2 ring-[#EF5B14]" : ""
-              }`}
-            >
-              {/* Camera Icon */}
-              <svg
-                viewBox="0 0 32 26"
-                className="w-[60%] h-[60%] text-[#DCDEE1]"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path d="M11.5 2C10.7 2 10 2.5 9.7 3.2L8.5 6H4C2.3 6 1 7.3 1 9V21C1 22.7 2.3 24 4 24H28C29.7 24 31 22.7 31 21V9C31 7.3 29.7 6 28 6H23.5L22.3 3.2C22 2.5 21.3 2 20.5 2H11.5ZM16 9.5C19.3 9.5 22 12.2 22 15.5C22 18.8 19.3 21.5 16 21.5C12.7 21.5 10 18.8 10 15.5C10 12.2 12.7 9.5 16 9.5ZM16 12C14.1 12 12.5 13.6 12.5 15.5C12.5 17.4 14.1 19 16 19C17.9 19 19.5 17.4 19.5 15.5C19.5 13.6 17.9 12 16 12Z" />
-              </svg>
             </button>
           </div>
 

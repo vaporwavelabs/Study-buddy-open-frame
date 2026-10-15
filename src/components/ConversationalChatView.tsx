@@ -28,6 +28,18 @@ interface ConversationalChatViewProps {
   onToggleRecordAudio: () => void;
   onSelectReadingPreset: (presetId: string) => void;
   onOpenKeyboard: () => void;
+  onPractice?: (question: string) => void;
+  title?: string;
+}
+
+/* Browser speech-to-text (Web Speech API). Chrome/Edge/Safari run it on-device or via the browser vendor;
+   nothing goes to our server. Firefox and many in-app browsers lack it, so callers must handle `supported=false`. */
+type SR = { lang: string; continuous: boolean; interimResults: boolean; start: () => void; stop: () => void; abort: () => void;
+  onresult: ((e: { resultIndex: number; results: ArrayLike<{ isFinal: boolean; 0: { transcript: string } }> }) => void) | null;
+  onerror: ((e: { error: string }) => void) | null; onend: (() => void) | null };
+function getSR(): (new () => SR) | null {
+  const w = window as unknown as { SpeechRecognition?: new () => SR; webkitSpeechRecognition?: new () => SR };
+  return w.SpeechRecognition || w.webkitSpeechRecognition || null;
 }
 
 export const ConversationalChatView: React.FC<ConversationalChatViewProps> = ({
@@ -41,8 +53,48 @@ export const ConversationalChatView: React.FC<ConversationalChatViewProps> = ({
   onToggleRecordAudio,
   onSelectReadingPreset,
   onOpenKeyboard,
+  onPractice,
+  title,
 }) => {
   const [inputText, setInputText] = useState("");
+  const [listening, setListening] = useState(false);
+  const [micNote, setMicNote] = useState<string | null>(null);
+  const recRef = useRef<SR | null>(null);
+  const baseRef = useRef("");
+  const wantRef = useRef(false);
+  const micSupported = typeof window !== "undefined" && !!getSR();
+
+  const stopListening = () => { wantRef.current = false; recRef.current?.stop(); setListening(false); };
+  const startListening = () => {
+    const Ctor = getSR();
+    if (!Ctor) { setMicNote("Voice typing isn't supported in this browser. Try Chrome, Edge or Safari, or type instead."); return; }
+    try { window.speechSynthesis?.cancel(); } catch { /* ignore */ }
+    const rec = new Ctor();
+    rec.lang = navigator.language || "en-US";
+    rec.continuous = true;
+    rec.interimResults = true;
+    baseRef.current = inputText ? inputText.replace(/\s*$/, " ") : "";
+    rec.onresult = (e) => {
+      let finalTxt = "", interim = "";
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const r = e.results[i];
+        if (r.isFinal) finalTxt += r[0].transcript; else interim += r[0].transcript;
+      }
+      if (finalTxt) baseRef.current = (baseRef.current + finalTxt).replace(/\s+/g, " ").trimStart() + " ";
+      setInputText((baseRef.current + interim).trimStart());
+    };
+    rec.onerror = (e) => {
+      if (e.error === "not-allowed" || e.error === "service-not-allowed") { wantRef.current = false; setMicNote("Microphone access is blocked. Allow the mic for this site, or type instead."); }
+      else if (e.error === "network") { wantRef.current = false; setMicNote("Voice typing needs the browser's speech service, which isn't reachable. Type instead."); }
+    };
+    // Browsers end a session after silence; keep listening until the student turns the mic off.
+    rec.onend = () => { if (wantRef.current) { try { rec.start(); return; } catch { /* fall through */ } } setListening(false); };
+    recRef.current = rec;
+    wantRef.current = true;
+    setMicNote(null);
+    try { rec.start(); setListening(true); } catch { setMicNote("Couldn't start the microphone. Try again."); }
+  };
+  useEffect(() => () => { wantRef.current = false; recRef.current?.abort(); }, []);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
@@ -56,8 +108,10 @@ export const ConversationalChatView: React.FC<ConversationalChatViewProps> = ({
   const handleSend = () => {
     if (!inputText.trim()) return;
     soundEngine.playKeyClick(1.1);
+    if (listening) stopListening();
     const msg = inputText.trim();
     setInputText("");
+    baseRef.current = "";
     onSendMessage(msg);
   };
 
@@ -79,22 +133,6 @@ export const ConversationalChatView: React.FC<ConversationalChatViewProps> = ({
     reader.readAsDataURL(file);
   };
 
-  const quickChips = studentProfile.name
-    ? [
-        "Analyze reading passage",
-        "What's the main idea?",
-        "Help with science homework",
-        "Explain quadratic formula",
-        "Give me a study tip",
-      ]
-    : [
-        "My name is Alex!",
-        "Call me Maya!",
-        "What can you help me with?",
-        "Help with reading comprehension",
-        "Analyze reading material",
-      ];
-
   return (
     <div className="relative z-10 flex-1 flex flex-col justify-between pt-0.5 overflow-hidden select-none">
       {/* Top Conversation Header with Student Name */}
@@ -102,9 +140,7 @@ export const ConversationalChatView: React.FC<ConversationalChatViewProps> = ({
         <div className="flex items-center gap-1.5 truncate">
           <span className="w-2 h-2 rounded-full bg-[#EF5B14] shrink-0 animate-pulse" />
           <span className="font-semibold text-white truncate text-[11px] sm:text-xs">
-            {studentProfile.name
-              ? `Chatting with ${studentProfile.nickname || studentProfile.name}`
-              : "Getting to Know You"}
+            {title || "Study Buddy"}
           </span>
           {studentProfile.currentNeed && (
             <span className="text-[10px] text-slate-400 hidden sm:inline truncate">
@@ -113,25 +149,6 @@ export const ConversationalChatView: React.FC<ConversationalChatViewProps> = ({
           )}
         </div>
 
-        {/* Reading preset quick select */}
-        <div className="flex items-center gap-1 shrink-0">
-          <button
-            type="button"
-            onClick={() => onSelectReadingPreset("read-photo")}
-            title="Load Science Article: Photosynthesis"
-            className="text-[9.5px] font-mono px-1.5 py-0.5 rounded bg-white/[0.08] hover:bg-white/[0.15] text-cyan-200 cursor-pointer"
-          >
-            Science
-          </button>
-          <button
-            type="button"
-            onClick={() => onSelectReadingPreset("read-printing")}
-            title="Load History Text: Printing Press"
-            className="text-[9.5px] font-mono px-1.5 py-0.5 rounded bg-white/[0.08] hover:bg-white/[0.15] text-amber-200 cursor-pointer"
-          >
-            History
-          </button>
-        </div>
       </div>
 
       {/* Scrollable Message Thread */}
@@ -141,9 +158,17 @@ export const ConversationalChatView: React.FC<ConversationalChatViewProps> = ({
       >
         {chatMessages.map((msg) => {
           const isBuddy = msg.sender === "buddy";
+          if (msg.pending) {
+            return (
+              <div key={msg.id} data-testid="pending-reply" data-reply-to={msg.replyTo} className="flex items-center gap-2 text-xs text-slate-400 italic px-2 py-1">
+                <Sparkles className="w-3.5 h-3.5 text-[#EF5B14] animate-spin" />
+                <span>Study Buddy is reading &amp; thinking...</span>
+              </div>
+            );
+          }
           return (
             <div
-              key={msg.id}
+              key={msg.id} data-testid={isBuddy ? "buddy-msg" : "user-msg"} data-msg-id={msg.id}
               className={`flex flex-col ${isBuddy ? "items-start" : "items-end"}`}
             >
               <div
@@ -154,7 +179,7 @@ export const ConversationalChatView: React.FC<ConversationalChatViewProps> = ({
                 }`}
               >
                 {/* Image/File attachment badge */}
-                {msg.attachmentPreview && (
+                {msg.attachmentPreview && !(msg.attachments && msg.attachments.length > 1) && (
                   <div className="mb-1.5 rounded-lg overflow-hidden border border-white/20">
                     <img
                       src={msg.attachmentPreview}
@@ -227,6 +252,31 @@ export const ConversationalChatView: React.FC<ConversationalChatViewProps> = ({
                   </div>
                 )}
 
+                {!isBuddy && msg.attachments && msg.attachments.length > 1 && (
+                  <div className="mb-1 grid grid-cols-4 gap-1" data-testid="msg-thumbs">
+                    {msg.attachments.map((src, i) => <img key={i} src={src} alt={`Photo ${i + 1}`} className="w-full aspect-square object-cover rounded" />)}
+                  </div>
+                )}
+
+                {isBuddy && msg.practice && msg.practice.length > 0 && (
+                  <div className="mt-1.5 flex flex-wrap items-center gap-1" data-testid="practice-chips">
+                    <span className="text-[9.5px] text-slate-400">Practice:</span>
+                    {msg.practice.map((q) => (
+                      <button key={q.question} type="button" data-testid="practice-chip"
+                        onClick={() => (onPractice ? onPractice(q.question) : onSendMessage(`Solve ${q.question}`))}
+                        className="px-2 py-0.5 rounded-full bg-[#EF5B14]/25 border border-[#EF5B14]/60 text-white text-[10px] font-mono">{q.question}</button>
+                    ))}
+                  </div>
+                )}
+
+                {isBuddy && msg.toolLinks && msg.toolLinks.length > 0 && (
+                  <div className="mt-1.5 flex flex-wrap gap-1.5" data-testid="tool-links">
+                    {msg.toolLinks.map((l) => (
+                      <a key={l.url} href={l.url} target="_blank" rel="noopener noreferrer" className="px-2 py-1 rounded-full bg-red-600/90 text-white text-[10px] font-semibold">🧰 {l.title} ↗</a>
+                    ))}
+                  </div>
+                )}
+
                 {/* Voice button for Buddy message */}
                 {isBuddy && (
                   <div className="mt-1 flex items-center justify-between pt-1 border-t border-white/10 text-[9.5px] text-slate-400">
@@ -246,31 +296,11 @@ export const ConversationalChatView: React.FC<ConversationalChatViewProps> = ({
           );
         })}
 
-        {isSendingMessage && (
-          <div className="flex items-center gap-2 text-xs text-slate-400 italic px-2 py-1">
-            <Sparkles className="w-3.5 h-3.5 text-[#EF5B14] animate-spin" />
-            <span>Study Buddy is reading &amp; thinking...</span>
-          </div>
-        )}
+
       </div>
 
-      {/* Quick Suggestion Chips */}
-      <div className="my-0.5 flex items-center gap-1 overflow-x-auto oled-scroll pb-0.5 shrink-0">
-        {quickChips.map((chip, idx) => (
-          <button
-            key={idx}
-            type="button"
-            onClick={() => {
-              soundEngine.playKeyClick(1.05);
-              onSendMessage(chip);
-            }}
-            className="px-2 py-0.5 rounded-full bg-white/[0.08] hover:bg-white/[0.16] text-[9.5px] text-slate-200 whitespace-nowrap shrink-0 cursor-pointer transition-colors"
-          >
-            {chip}
-          </button>
-        ))}
-      </div>
-
+      {micNote && <div className="text-[10px] text-amber-300 px-1 pb-0.5" role="status" data-testid="mic-note">{micNote}</div>}
+      {listening && <div className="text-[10px] text-red-300 px-1 pb-0.5 flex items-center gap-1" role="status" data-testid="mic-live"><span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />Listening… tap the mic to stop, then Send.</div>}
       {/* Input Message & Action Bar */}
       <div className="pt-1 flex items-center gap-1 shrink-0">
         {/* File/Photo Upload */}
@@ -290,18 +320,20 @@ export const ConversationalChatView: React.FC<ConversationalChatViewProps> = ({
           className="hidden"
         />
 
-        {/* Voice Note Mic */}
+        {/* Voice typing: transcribes into the box; nothing is sent until Send is pressed */}
         <button
           type="button"
-          onClick={onToggleRecordAudio}
-          title="Speak your question or thoughts"
+          onClick={() => (listening ? stopListening() : startListening())}
+          title={micSupported ? (listening ? "Stop voice typing" : "Voice typing") : "Voice typing not supported in this browser"}
+          aria-label={listening ? "Microphone on, tap to stop" : "Microphone off, tap to talk"}
+          aria-pressed={listening}
+          data-testid="mic-button"
+          data-state={listening ? "on" : "off"}
           className={`p-1.5 rounded-lg transition-colors cursor-pointer shrink-0 ${
-            isRecordingAudio
-              ? "bg-red-500 text-white animate-pulse"
-              : "bg-white/10 hover:bg-white/20 text-slate-200"
+            listening ? "bg-red-500 text-white ring-2 ring-red-300 animate-pulse" : micSupported ? "bg-white/10 hover:bg-white/20 text-slate-200" : "bg-white/5 text-slate-500"
           }`}
         >
-          {isRecordingAudio ? <MicOff className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5" />}
+          {listening ? <Mic className="w-3.5 h-3.5" /> : <MicOff className="w-3.5 h-3.5" />}
         </button>
 
         {/* Spawn Virtual Keyboard Button */}
@@ -319,11 +351,10 @@ export const ConversationalChatView: React.FC<ConversationalChatViewProps> = ({
           type="text"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
-          onFocus={onOpenKeyboard}
           onKeyDown={(e) => {
             if (e.key === "Enter") handleSend();
           }}
-          placeholder="Ask anything, introduce yourself, or analyze text..."
+          placeholder={listening ? "Listening…" : "Ask a question…"}
           aria-label="Chat with Study Buddy"
           className="flex-1 bg-black/60 border border-white/15 focus:border-[#EF5B14] rounded-lg px-2 py-1 text-xs text-white placeholder:text-slate-500 outline-none truncate"
         />
