@@ -1,0 +1,68 @@
+# Token-auth reverse proxy for Ollama (raw Ollama stays on 127.0.0.1:11434 and is never exposed).
+#   Site 1  10.7.0.2:11435   WireGuard option (VPS -> PC over WG)
+#   Site 2  127.0.0.1:11436  Cloudflare Tunnel option (cloudflared -> this loopback site, never raw 11434)
+# Run:  $env:OLLAMA_PROXY_TOKEN="<long random>"; caddy run --config .\Caddyfile
+# The VPS sends:  Authorization: Bearer <same token>   (OLLAMA_TOKEN in the VPS .env)
+#
+# {$OLLAMA_PROXY_TOKEN} is substituted when the config is loaded. Fail-closed rules:
+#   - unset  -> the placeholder "NOT SET! refuse all" is used. It contains a space and "!", so it can never pass
+#               the token-format check, AND the @unconfigured matcher answers 401 to every request.
+#   - empty  -> @unconfigured answers 401 to every request.
+#   - set    -> the exact "Bearer <token>" is required, and the token must be at least 24 safe characters.
+# Set a long random token (48 characters recommended) on both the PC and the VPS (OLLAMA_TOKEN).
+{
+	auto_https off
+	admin off
+}
+
+(ollama_guard) {
+	# Proxy token missing or empty -> refuse everything (checked first).
+	@unconfigured expression `"{$OLLAMA_PROXY_TOKEN:NOT SET! refuse all}" == "NOT SET! refuse all" || "{$OLLAMA_PROXY_TOKEN:NOT SET! refuse all}" == ""`
+	handle @unconfigured {
+		respond "proxy token not configured" 401
+	}
+
+	# Both conditions must match (AND): exact token, and a token of at least 24 safe characters.
+	@authorized {
+		header Authorization "Bearer {$OLLAMA_PROXY_TOKEN:NOT SET! refuse all}"
+		header_regexp Authorization "^Bearer [A-Za-z0-9._~+/=-]{24,}$"
+	}
+	@allowed path /api/chat /api/tags
+
+	request_body {
+		max_size 1MB
+	}
+
+	handle @authorized {
+		handle @allowed {
+			reverse_proxy 127.0.0.1:11434 {
+				header_up Host 127.0.0.1:11434
+				transport http {
+					response_header_timeout 60s
+				}
+			}
+		}
+		respond "not found" 404
+	}
+	respond "unauthorized" 401
+}
+
+# WireGuard: listens only on the WG interface address
+http://:11435 {
+	bind 10.7.0.2
+	import ollama_guard
+	log {
+		output file C:\caddy\ollama-proxy-wg.log
+		format console
+	}
+}
+
+# Cloudflare Tunnel: loopback only; cloudflared forwards here
+http://:11436 {
+	bind 127.0.0.1
+	import ollama_guard
+	log {
+		output file C:\caddy\ollama-proxy-cf.log
+		format console
+	}
+}

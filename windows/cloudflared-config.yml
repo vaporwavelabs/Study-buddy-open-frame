@@ -1,0 +1,11 @@
+# Cloudflare Tunnel option (no inbound ports at home or on the VPS).
+# Path on Windows: C:\Users\<you>\.cloudflared\config.yml
+tunnel: <TUNNEL-UUID>
+credentials-file: C:\Users\<you>\.cloudflared\<TUNNEL-UUID>.json
+
+ingress:
+  - hostname: ollama.toolsontab.com          # protected by a Cloudflare Access app (service token only)
+    service: http://127.0.0.1:11436          # loopback Caddy site (token + path allowlist), NEVER raw 11434
+    originRequest:
+      connectTimeout: 10s
+  - service: http_status:404
