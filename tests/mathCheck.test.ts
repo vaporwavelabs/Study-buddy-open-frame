@@ -1,0 +1,11 @@
+import { test } from "node:test";
+import assert from "node:assert";
+import { checkEquationAnswer as c } from "../server/mathCheck.ts";
+const ok = (p: string, a: string) => { const r = c(p, a); assert.ok(r.checkable, p); return (r as any).ok; };
+test("linear", () => { assert.ok(ok("2x + 3 = 11", "x = 4")); assert.ok(!ok("2x + 3 = 11", "x = 5.5")); assert.ok(!ok("2x + 3 = 11", "2x = 8")); });
+test("quadratic", () => { assert.ok(ok("x^2 - 9 = 0", "x = 3 or x = -3")); assert.ok(ok("x^2 - 9 = 0", "x = ±3")); assert.ok(!ok("x^2 - 9 = 0", "x = 3")); assert.ok(ok("x² + 2x + 1 = 0", "x = -1")); });
+test("implicit mult/parens/fractions", () => { assert.ok(ok("3(y - 2) = 2y + 1", "y = 7")); assert.ok(ok("2x = 1", "x = 1/2")); assert.ok(ok("Solve for x: 5x - 10 = 0", "x = 2")); });
+test("no real roots", () => { assert.ok(ok("x^2 + 1 = 0", "No real solution")); });
+test("not checkable", () => { for (const p of ["A train travels 120 km in 2 hours.", "x + y = 3", "x^3 = 8", "sin(x) = 0"]) assert.equal(c(p, "1").checkable, false, p); });
+test("arithmetic/percent", () => { assert.ok(ok("15% of 80", "12")); assert.ok(!ok("15% of 80", "200")); assert.ok(ok("What is 12 * (3 + 4)?", "84")); assert.ok(ok("What is 1,000 + 250?".replace(",", ""), "1,250")); });
+test("variable kept", () => { const r: any = c("3(y - 2) = 2y + 1", "y = 3"); assert.equal(r.variable, "y"); });
