@@ -1,0 +1,608 @@
+[
+ {
+  "slug": "compress-image",
+  "title": "Compress an image to a size",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/compress-image"
+ },
+ {
+  "slug": "convert-image",
+  "title": "Convert a picture",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/convert-image"
+ },
+ {
+  "slug": "convert-heic-jpg",
+  "title": "HEIC to JPEG or PNG",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/convert-heic-jpg"
+ },
+ {
+  "slug": "remove-flat-background",
+  "title": "Remove a flat background color",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/remove-flat-background"
+ },
+ {
+  "slug": "remove-background",
+  "title": "Remove a portrait background",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/remove-background"
+ },
+ {
+  "slug": "signature-png",
+  "title": "Signature on a transparent PNG",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/signature-png"
+ },
+ {
+  "slug": "strip-image-metadata",
+  "title": "Strip photo metadata",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/strip-image-metadata"
+ },
+ {
+  "slug": "pixel-trace-svg",
+  "title": "SVG maker",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/pixel-trace-svg"
+ },
+ {
+  "slug": "id-photo-crop",
+  "title": "ID photo crop",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/id-photo-crop"
+ },
+ {
+  "slug": "exam-photo-signature-resize",
+  "title": "Exam photo and signature resize",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/exam-photo-signature-resize"
+ },
+ {
+  "slug": "social-image-resizer",
+  "title": "Social image resizer",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/social-image-resizer"
+ },
+ {
+  "slug": "docx-to-text",
+  "title": "Word to text or PDF",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/docx-to-text"
+ },
+ {
+  "slug": "pptx-to-pdf",
+  "title": "Slide text to PDF",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/pptx-to-pdf"
+ },
+ {
+  "slug": "markdown-doc",
+  "title": "Markdown or text to HTML and PDF",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/markdown-doc"
+ },
+ {
+  "slug": "sheet-convert",
+  "title": "CSV to Excel",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/sheet-convert"
+ },
+ {
+  "slug": "unpack-unitypackage",
+  "title": "Unpack a Unity package",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/unpack-unitypackage"
+ },
+ {
+  "slug": "fbx-to-glb",
+  "title": "FBX to GLB",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/fbx-to-glb"
+ },
+ {
+  "slug": "archive-pack",
+  "title": "Pack or extract an archive",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/archive-pack"
+ },
+ {
+  "slug": "compress-pdf",
+  "title": "Compress a PDF",
+  "category": "pdf",
+  "url": "https://toolsontab.com/tools/compress-pdf"
+ },
+ {
+  "slug": "merge-pdf",
+  "title": "Merge PDFs",
+  "category": "pdf",
+  "url": "https://toolsontab.com/tools/merge-pdf"
+ },
+ {
+  "slug": "split-pdf",
+  "title": "Split a PDF",
+  "category": "pdf",
+  "url": "https://toolsontab.com/tools/split-pdf"
+ },
+ {
+  "slug": "delete-pdf-pages",
+  "title": "Delete PDF pages",
+  "category": "pdf",
+  "url": "https://toolsontab.com/tools/delete-pdf-pages"
+ },
+ {
+  "slug": "rotate-pdf",
+  "title": "Rotate PDF pages",
+  "category": "pdf",
+  "url": "https://toolsontab.com/tools/rotate-pdf"
+ },
+ {
+  "slug": "pdf-to-images",
+  "title": "PDF to images",
+  "category": "pdf",
+  "url": "https://toolsontab.com/tools/pdf-to-images"
+ },
+ {
+  "slug": "images-to-pdf",
+  "title": "Images to PDF",
+  "category": "pdf",
+  "url": "https://toolsontab.com/tools/images-to-pdf"
+ },
+ {
+  "slug": "extract-pdf-text",
+  "title": "Extract text from a PDF",
+  "category": "pdf",
+  "url": "https://toolsontab.com/tools/extract-pdf-text"
+ },
+ {
+  "slug": "sign-pdf",
+  "title": "Sign a document",
+  "category": "pdf",
+  "url": "https://toolsontab.com/tools/sign-pdf"
+ },
+ {
+  "slug": "invoice-generator",
+  "title": "Invoice Generator",
+  "category": "business",
+  "url": "https://toolsontab.com/tools/invoice-generator"
+ },
+ {
+  "slug": "quote-generator",
+  "title": "Quote Generator",
+  "category": "business",
+  "url": "https://toolsontab.com/tools/quote-generator"
+ },
+ {
+  "slug": "receipt-generator",
+  "title": "Receipt Generator",
+  "category": "business",
+  "url": "https://toolsontab.com/tools/receipt-generator"
+ },
+ {
+  "slug": "markup-margin-calculator",
+  "title": "Markup and margin",
+  "category": "business",
+  "url": "https://toolsontab.com/tools/markup-margin-calculator"
+ },
+ {
+  "slug": "breakeven-calculator",
+  "title": "Break-even units",
+  "category": "business",
+  "url": "https://toolsontab.com/tools/breakeven-calculator"
+ },
+ {
+  "slug": "sales-tax-calculator",
+  "title": "Sales tax",
+  "category": "business",
+  "url": "https://toolsontab.com/tools/sales-tax-calculator"
+ },
+ {
+  "slug": "commission-calculator",
+  "title": "Commission",
+  "category": "business",
+  "url": "https://toolsontab.com/tools/commission-calculator"
+ },
+ {
+  "slug": "tip-calculator",
+  "title": "Tip Calculator & Bill Splitter",
+  "category": "business",
+  "url": "https://toolsontab.com/tools/tip-calculator"
+ },
+ {
+  "slug": "resume-builder",
+  "title": "Resume builder",
+  "category": "career",
+  "url": "https://toolsontab.com/tools/resume-builder"
+ },
+ {
+  "slug": "resume-keyword-checker",
+  "title": "Resume vs job description",
+  "category": "career",
+  "url": "https://toolsontab.com/tools/resume-keyword-checker"
+ },
+ {
+  "slug": "cover-letter-generator",
+  "title": "Cover letter draft",
+  "category": "career",
+  "url": "https://toolsontab.com/tools/cover-letter-generator"
+ },
+ {
+  "slug": "linkedin-headline-generator",
+  "title": "Headline drafts",
+  "category": "career",
+  "url": "https://toolsontab.com/tools/linkedin-headline-generator"
+ },
+ {
+  "slug": "salary-calculator",
+  "title": "Salary and hourly pay",
+  "category": "career",
+  "url": "https://toolsontab.com/tools/salary-calculator"
+ },
+ {
+  "slug": "json-formatter",
+  "title": "JSON formatter",
+  "category": "developer",
+  "url": "https://toolsontab.com/tools/json-formatter"
+ },
+ {
+  "slug": "csv-json-converter",
+  "title": "CSV and JSON",
+  "category": "developer",
+  "url": "https://toolsontab.com/tools/csv-json-converter"
+ },
+ {
+  "slug": "base64-encoder",
+  "title": "Base64",
+  "category": "developer",
+  "url": "https://toolsontab.com/tools/base64-encoder"
+ },
+ {
+  "slug": "url-encoder",
+  "title": "URL encode and decode",
+  "category": "developer",
+  "url": "https://toolsontab.com/tools/url-encoder"
+ },
+ {
+  "slug": "jwt-decoder",
+  "title": "JWT decoder",
+  "category": "developer",
+  "url": "https://toolsontab.com/tools/jwt-decoder"
+ },
+ {
+  "slug": "uuid-generator",
+  "title": "UUID v4 Generator",
+  "category": "developer",
+  "url": "https://toolsontab.com/tools/uuid-generator"
+ },
+ {
+  "slug": "regex-tester",
+  "title": "Regex tester",
+  "category": "developer",
+  "url": "https://toolsontab.com/tools/regex-tester"
+ },
+ {
+  "slug": "cron-explainer",
+  "title": "Cron explainer",
+  "category": "developer",
+  "url": "https://toolsontab.com/tools/cron-explainer"
+ },
+ {
+  "slug": "timestamp-converter",
+  "title": "Unix timestamp",
+  "category": "developer",
+  "url": "https://toolsontab.com/tools/timestamp-converter"
+ },
+ {
+  "slug": "file-encrypt",
+  "title": "Encrypt a file",
+  "category": "security",
+  "url": "https://toolsontab.com/tools/file-encrypt"
+ },
+ {
+  "slug": "file-checksum",
+  "title": "SHA-256 checksum",
+  "category": "security",
+  "url": "https://toolsontab.com/tools/file-checksum"
+ },
+ {
+  "slug": "website-security-check",
+  "title": "Website security check",
+  "category": "security",
+  "url": "https://toolsontab.com/tools/website-security-check"
+ },
+ {
+  "slug": "qr-code-generator",
+  "title": "QR code",
+  "category": "general",
+  "url": "https://toolsontab.com/tools/qr-code-generator"
+ },
+ {
+  "slug": "calendar-ics-generator",
+  "title": "Calendar event file",
+  "category": "general",
+  "url": "https://toolsontab.com/tools/calendar-ics-generator"
+ },
+ {
+  "slug": "unit-converter",
+  "title": "Unit converter",
+  "category": "general",
+  "url": "https://toolsontab.com/tools/unit-converter"
+ },
+ {
+  "slug": "data-size",
+  "title": "KB, MB, GB, and TB",
+  "category": "calc",
+  "url": "https://toolsontab.com/tools/data-size"
+ },
+ {
+  "slug": "data-speed",
+  "title": "Download speed and transfer time",
+  "category": "calc",
+  "url": "https://toolsontab.com/tools/data-speed"
+ },
+ {
+  "slug": "length-area",
+  "title": "Millimeters, inches, feet, and acres",
+  "category": "calc",
+  "url": "https://toolsontab.com/tools/length-area"
+ },
+ {
+  "slug": "weight-convert",
+  "title": "Weight converter",
+  "category": "calc",
+  "url": "https://toolsontab.com/tools/weight-convert"
+ },
+ {
+  "slug": "time-span",
+  "title": "Milliseconds to years",
+  "category": "calc",
+  "url": "https://toolsontab.com/tools/time-span"
+ },
+ {
+  "slug": "currency-exchange",
+  "title": "Currency converter",
+  "category": "calc",
+  "url": "https://toolsontab.com/tools/currency-exchange"
+ },
+ {
+  "slug": "password-generator",
+  "title": "Password generator",
+  "category": "general",
+  "url": "https://toolsontab.com/tools/password-generator"
+ },
+ {
+  "slug": "word-counter",
+  "title": "Word counter",
+  "category": "general",
+  "url": "https://toolsontab.com/tools/word-counter"
+ },
+ {
+  "slug": "percentage-calculator",
+  "title": "Percentage calculator",
+  "category": "general",
+  "url": "https://toolsontab.com/tools/percentage-calculator"
+ },
+ {
+  "slug": "date-difference",
+  "title": "Date difference and age",
+  "category": "general",
+  "url": "https://toolsontab.com/tools/date-difference"
+ },
+ {
+  "slug": "loan-calculator",
+  "title": "Loan payment estimate",
+  "category": "calc",
+  "url": "https://toolsontab.com/tools/loan-calculator"
+ },
+ {
+  "slug": "text-diff",
+  "title": "Text diff",
+  "category": "general",
+  "url": "https://toolsontab.com/tools/text-diff"
+ },
+ {
+  "slug": "og-preview",
+  "title": "Open Graph preview",
+  "category": "general",
+  "url": "https://toolsontab.com/tools/og-preview"
+ },
+ {
+  "slug": "video-to-audio",
+  "title": "Video to playable audio",
+  "category": "general",
+  "url": "https://toolsontab.com/tools/video-to-audio"
+ },
+ {
+  "slug": "compress-video",
+  "title": "Compress a video",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/compress-video"
+ },
+ {
+  "slug": "my-ip",
+  "title": "What's My IP Address?",
+  "category": "security",
+  "url": "https://toolsontab.com/tools/my-ip"
+ },
+ {
+  "slug": "dns-check",
+  "title": "Is my DNS misconfigured?",
+  "category": "security",
+  "url": "https://toolsontab.com/tools/dns-check"
+ },
+ {
+  "slug": "browser-fingerprint",
+  "title": "What's my browser fingerprint?",
+  "category": "security",
+  "url": "https://toolsontab.com/tools/browser-fingerprint"
+ },
+ {
+  "slug": "image-resizer",
+  "title": "Image Resizer",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/image-resizer"
+ },
+ {
+  "slug": "image-cropper",
+  "title": "Image Cropper",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/image-cropper"
+ },
+ {
+  "slug": "pdf-to-word",
+  "title": "PDF to Word",
+  "category": "pdf",
+  "url": "https://toolsontab.com/tools/pdf-to-word"
+ },
+ {
+  "slug": "word-to-pdf",
+  "title": "Word to PDF",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/word-to-pdf"
+ },
+ {
+  "slug": "excel-to-pdf",
+  "title": "Excel to PDF",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/excel-to-pdf"
+ },
+ {
+  "slug": "pdf-page-numbers",
+  "title": "Add Page Numbers to a PDF",
+  "category": "pdf",
+  "url": "https://toolsontab.com/tools/pdf-page-numbers"
+ },
+ {
+  "slug": "pdf-watermark",
+  "title": "Watermark a PDF",
+  "category": "pdf",
+  "url": "https://toolsontab.com/tools/pdf-watermark"
+ },
+ {
+  "slug": "image-watermark",
+  "title": "Watermark an Image",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/image-watermark"
+ },
+ {
+  "slug": "pdf-password",
+  "title": "Password Protect a PDF",
+  "category": "pdf",
+  "url": "https://toolsontab.com/tools/pdf-password"
+ },
+ {
+  "slug": "unlock-pdf",
+  "title": "Unlock a PDF",
+  "category": "pdf",
+  "url": "https://toolsontab.com/tools/unlock-pdf"
+ },
+ {
+  "slug": "image-ocr",
+  "title": "Image to Text OCR",
+  "category": "image",
+  "url": "https://toolsontab.com/tools/image-ocr"
+ },
+ {
+  "slug": "color-palette",
+  "title": "Color Palette from an Image",
+  "category": "developer",
+  "url": "https://toolsontab.com/tools/color-palette"
+ },
+ {
+  "slug": "contrast-checker",
+  "title": "Contrast Checker",
+  "category": "developer",
+  "url": "https://toolsontab.com/tools/contrast-checker"
+ },
+ {
+  "slug": "favicon-generator",
+  "title": "Favicon Generator",
+  "category": "developer",
+  "url": "https://toolsontab.com/tools/favicon-generator"
+ },
+ {
+  "slug": "hash-generator",
+  "title": "Hash Generator",
+  "category": "security",
+  "url": "https://toolsontab.com/tools/hash-generator"
+ },
+ {
+  "slug": "yaml-formatter",
+  "title": "YAML Formatter",
+  "category": "developer",
+  "url": "https://toolsontab.com/tools/yaml-formatter"
+ },
+ {
+  "slug": "xml-formatter",
+  "title": "XML Formatter",
+  "category": "developer",
+  "url": "https://toolsontab.com/tools/xml-formatter"
+ },
+ {
+  "slug": "sql-formatter",
+  "title": "SQL Formatter",
+  "category": "developer",
+  "url": "https://toolsontab.com/tools/sql-formatter"
+ },
+ {
+  "slug": "emi-calculator",
+  "title": "EMI calculator",
+  "category": "calc",
+  "url": "https://toolsontab.com/tools/emi-calculator"
+ },
+ {
+  "slug": "mortgage-calculator",
+  "title": "Mortgage Calculator",
+  "category": "calc",
+  "url": "https://toolsontab.com/tools/mortgage-calculator"
+ },
+ {
+  "slug": "compound-interest",
+  "title": "Compound Interest Calculator",
+  "category": "calc",
+  "url": "https://toolsontab.com/tools/compound-interest"
+ },
+ {
+  "slug": "roi-calculator",
+  "title": "ROI Calculator",
+  "category": "calc",
+  "url": "https://toolsontab.com/tools/roi-calculator"
+ },
+ {
+  "slug": "timesheet-calculator",
+  "title": "Timesheet Calculator",
+  "category": "business",
+  "url": "https://toolsontab.com/tools/timesheet-calculator"
+ },
+ {
+  "slug": "case-converter",
+  "title": "Case Converter",
+  "category": "general",
+  "url": "https://toolsontab.com/tools/case-converter"
+ },
+ {
+  "slug": "slug-generator",
+  "title": "Slug Generator",
+  "category": "general",
+  "url": "https://toolsontab.com/tools/slug-generator"
+ },
+ {
+  "slug": "lorem-ipsum",
+  "title": "Lorem Ipsum Generator",
+  "category": "general",
+  "url": "https://toolsontab.com/tools/lorem-ipsum"
+ },
+ {
+  "slug": "meta-tag-generator",
+  "title": "Meta Tag Generator",
+  "category": "developer",
+  "url": "https://toolsontab.com/tools/meta-tag-generator"
+ },
+ {
+  "slug": "robots-txt-generator",
+  "title": "robots.txt Generator",
+  "category": "developer",
+  "url": "https://toolsontab.com/tools/robots-txt-generator"
+ }
+]

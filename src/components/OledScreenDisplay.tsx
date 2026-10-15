@@ -59,6 +59,7 @@ interface OledScreenDisplayProps {
   onChangeEquation: (val: string) => void;
   onChangeVoiceNote: (val: string) => void;
   onToggleRecordAudio: () => void;
+  chatTitle?: string;
   onSolveEquation: (
     eqText: string,
     voiceText: string,
@@ -97,6 +98,7 @@ export const OledScreenDisplay: React.FC<OledScreenDisplayProps> = ({
   onChangeVoiceNote,
   onToggleRecordAudio,
   onSolveEquation,
+  chatTitle,
   onSwitchScreenMode,
   onOpenKeyboard,
   onAnswerCheck,
@@ -106,7 +108,7 @@ export const OledScreenDisplay: React.FC<OledScreenDisplayProps> = ({
 }) => {
   const [cameraSubMode, setCameraSubMode] = useState<
     "math-presets" | "reading-presets" | "draw" | "webcam"
-  >("math-presets");
+  >("webcam");
   const [selectedMathPreset, setSelectedMathPreset] = useState<HandwrittenPreset>(
     HANDWRITTEN_PRESETS[0]
   );
@@ -317,7 +319,7 @@ export const OledScreenDisplay: React.FC<OledScreenDisplayProps> = ({
           <span className="text-[#EF5B14] font-semibold">STUDY BUDDY</span>
           <span aria-hidden="true">·</span>
           <span className="text-slate-300 truncate text-[10px]">
-            {studentProfile.name ? studentProfile.nickname || studentProfile.name : "Gemma 4"}
+            {studentProfile.name ? studentProfile.nickname || studentProfile.name : "Buddy"}
           </span>
         </div>
 
@@ -348,19 +350,7 @@ export const OledScreenDisplay: React.FC<OledScreenDisplayProps> = ({
           >
             Steps
           </button>
-          <button
-            type="button"
-            onClick={() => onSwitchScreenMode("camera")}
-            title="Scan handwritten equation or reading passage"
-            className={`px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors cursor-pointer flex items-center gap-0.5 ${
-              screenMode === "camera"
-                ? "bg-[#EF5B14] text-white"
-                : "text-slate-400 hover:text-white"
-            }`}
-          >
-            <Camera className="w-3 h-3" />
-            <span>Scan</span>
-          </button>
+          
           <button
             type="button"
             onClick={() => {
@@ -458,7 +448,7 @@ export const OledScreenDisplay: React.FC<OledScreenDisplayProps> = ({
             <Sparkles className="w-6 h-6 text-[#EF5B14]" />
           </div>
           <p className="text-sm font-semibold text-white">
-            Gemma 4 Edge is scanning &amp; reasoning...
+            Study Buddy is thinking...
           </p>
           <p className="text-xs text-slate-400 mt-1 max-w-[260px]">
             Parsing equation &amp; audio notes into step-by-step tutoring.
@@ -479,6 +469,8 @@ export const OledScreenDisplay: React.FC<OledScreenDisplayProps> = ({
           onToggleRecordAudio={onToggleRecordAudio}
           onSelectReadingPreset={onSelectReadingPreset}
           onOpenKeyboard={() => onOpenKeyboard("qwerty")}
+          onPractice={(q) => onSolveEquation(q, "")}
+          title={chatTitle}
         />
       )}
 
@@ -508,6 +500,15 @@ export const OledScreenDisplay: React.FC<OledScreenDisplayProps> = ({
               </div>
             </div>
           </div>
+          {solution.practice && solution.practice.length > 0 && (
+            <div className="flex flex-wrap items-center gap-1 px-1 pt-1" data-testid="practice-chips">
+              <span className="text-[9px] font-mono text-slate-400">Try:</span>
+              {solution.practice.map((q) => (
+                <button key={q.question} type="button" data-testid="practice-chip" onClick={() => onSolveEquation(q.question, "")}
+                  className="px-1.5 py-0.5 rounded bg-[#EF5B14]/20 border border-[#EF5B14]/50 text-[10px] font-mono text-white">{q.question}</button>
+              ))}
+            </div>
+          )}
 
           {/* Toggle between Step Walkthrough and Quick Comprehension Check */}
           {!showQuizOnScreen ? (
@@ -669,28 +670,6 @@ export const OledScreenDisplay: React.FC<OledScreenDisplayProps> = ({
             <div className="flex items-center gap-1 bg-white/[0.06] p-0.5 rounded-lg overflow-x-auto oled-scroll">
               <button
                 type="button"
-                onClick={() => setCameraSubMode("math-presets")}
-                className={`px-1.5 py-0.5 rounded text-[9.5px] font-medium cursor-pointer transition-colors ${
-                  cameraSubMode === "math-presets"
-                    ? "bg-white text-slate-950 font-bold"
-                    : "text-slate-300 hover:text-white"
-                }`}
-              >
-                Math HW
-              </button>
-              <button
-                type="button"
-                onClick={() => setCameraSubMode("reading-presets")}
-                className={`px-1.5 py-0.5 rounded text-[9.5px] font-medium cursor-pointer transition-colors ${
-                  cameraSubMode === "reading-presets"
-                    ? "bg-white text-slate-950 font-bold"
-                    : "text-slate-300 hover:text-white"
-                }`}
-              >
-                Reading
-              </button>
-              <button
-                type="button"
                 onClick={() => setCameraSubMode("draw")}
                 className={`px-1.5 py-0.5 rounded text-[9.5px] font-medium cursor-pointer transition-colors flex items-center gap-0.5 ${
                   cameraSubMode === "draw"
@@ -735,80 +714,6 @@ export const OledScreenDisplay: React.FC<OledScreenDisplayProps> = ({
 
           {/* Viewport Stage */}
           <div className="my-1 flex-1 relative rounded-xl overflow-hidden border border-white/15 bg-[#12151B] flex flex-col justify-center">
-            {cameraSubMode === "math-presets" && (
-              <div className="p-2 flex flex-col justify-between h-full">
-                <div className="relative rounded-lg bg-[#F6F4EC] text-[#182848] p-2 border border-amber-200/40 shadow-inner">
-                  <div className="flex items-center justify-between text-[9px] font-mono text-slate-500">
-                    <span>NOTEBOOK MATH SCAN · {selectedMathPreset.topic}</span>
-                    <span className="text-[#EF5B14] font-semibold">READY</span>
-                  </div>
-                  <div className="mt-0.5 font-mono text-sm sm:text-base font-bold tracking-tight text-[#182848]">
-                    {selectedMathPreset.handwrittenLines[0]}
-                  </div>
-                  <div className="text-[9.5px] text-slate-600 font-medium truncate">
-                    {selectedMathPreset.handwrittenLines[1]}
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-1 overflow-x-auto oled-scroll py-0.5">
-                  {HANDWRITTEN_PRESETS.map((preset) => (
-                    <button
-                      key={preset.id}
-                      type="button"
-                      onClick={() => {
-                        soundEngine.playKeyClick(1.05);
-                        setSelectedMathPreset(preset);
-                      }}
-                      className={`px-2 py-0.5 rounded text-[9px] font-mono whitespace-nowrap shrink-0 cursor-pointer transition-colors ${
-                        selectedMathPreset.id === preset.id
-                          ? "bg-[#EF5B14] text-white font-semibold"
-                          : "bg-white/[0.07] text-slate-300 hover:bg-white/[0.14]"
-                      }`}
-                    >
-                      {preset.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {cameraSubMode === "reading-presets" && (
-              <div className="p-2 flex flex-col justify-between h-full bg-[#181C24]">
-                <div className="relative rounded-lg bg-[#FAF8F5] text-[#1A1D23] p-2 border border-amber-200/40 shadow-inner">
-                  <div className="flex items-center justify-between text-[9px] font-mono text-slate-500">
-                    <span>READING MATERIAL · {selectedReadingPreset.subject}</span>
-                    <span className="text-[#EF5B14] font-semibold">READY</span>
-                  </div>
-                  <div className="mt-0.5 font-serif text-xs font-bold tracking-tight text-[#1A1D23] truncate">
-                    {selectedReadingPreset.title}
-                  </div>
-                  <div className="text-[9px] text-slate-600 italic line-clamp-2 mt-0.5">
-                    &ldquo;{selectedReadingPreset.excerpt}&rdquo;
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-1 overflow-x-auto oled-scroll py-0.5">
-                  {READING_PRESETS.map((preset) => (
-                    <button
-                      key={preset.id}
-                      type="button"
-                      onClick={() => {
-                        soundEngine.playKeyClick(1.05);
-                        setSelectedReadingPreset(preset);
-                      }}
-                      className={`px-2 py-0.5 rounded text-[9px] font-mono whitespace-nowrap shrink-0 cursor-pointer transition-colors ${
-                        selectedReadingPreset.id === preset.id
-                          ? "bg-[#EF5B14] text-white font-semibold"
-                          : "bg-white/[0.07] text-slate-300 hover:bg-white/[0.14]"
-                      }`}
-                    >
-                      {preset.title.split(" ")[0]}...
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {cameraSubMode === "draw" && (
               <div className="relative w-full h-full">
                 <canvas
@@ -958,7 +863,7 @@ export const OledScreenDisplay: React.FC<OledScreenDisplayProps> = ({
             className="w-full py-2 rounded-xl bg-[#EF5B14] hover:bg-[#F46925] text-white font-semibold text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-md transition-colors shrink-0"
           >
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Solve with Gemma 4 Edge</span>
+            <span>Solve step by step</span>
           </button>
         </div>
       )}
