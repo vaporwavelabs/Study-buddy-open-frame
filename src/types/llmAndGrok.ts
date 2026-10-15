@@ -1,9 +1,7 @@
 export type LlmProviderType =
   | "local-edge"
   | "ollama"
-  | "custom-server"
-  | "grok"
-  | "gemini";
+  | "custom-server";
 
 export interface LlmProviderConfig {
   id: string;
@@ -66,12 +64,6 @@ export interface GrokBotAnalysisRequest {
   task: string;
   targetFiles?: string[];
   autoApplyPatch?: boolean;
-  providerOverride?: {
-    type: LlmProviderType;
-    baseUrl?: string;
-    model?: string;
-    apiKey?: string;
-  };
 }
 
 export interface GrokBotAnalysisStep {

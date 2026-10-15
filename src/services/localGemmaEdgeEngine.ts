@@ -142,7 +142,7 @@ export function solveWithLocalGemmaEdge(
     ? "Using Deep Intuition mode so every algebraic move feels crystal clear."
     : depth === "concise"
     ? "Fast-track Edge breakdown focused on the key algebraic transformations."
-    : "Analyzed locally via Gemma 4 Edge 4B Math Engine (0ms network latency, 100% offline).";
+    : "Solved by the built-in offline helper (rule-based, runs in your browser).";
 
   // 1. Check Quadratic (e.g. 2x^2 - 8x + 6 = 0 or similar)
   if (
@@ -221,7 +221,7 @@ export function solveWithLocalGemmaEdge(
         hintOnRetry:
           "Look at how 2x² became just x² inside the parentheses—what did that do to our factoring step?",
       },
-      engineUsed: "Gemma 4 Edge (Local Offline)",
+      engineUsed: "Built-in offline helper (no AI)",
       voiceNoteAttached: cleanVoice || undefined,
       scannedImagePreview,
     };
@@ -294,7 +294,7 @@ export function solveWithLocalGemmaEdge(
         hintOnRetry:
           "Think about a graph of y = 2: does it go up or down as x changes?",
       },
-      engineUsed: "Gemma 4 Edge (Local Offline)",
+      engineUsed: "Built-in offline helper (no AI)",
       voiceNoteAttached: cleanVoice || undefined,
       scannedImagePreview,
     };
@@ -362,7 +362,7 @@ export function solveWithLocalGemmaEdge(
           "Awesome! Opposite signs cancel out cleanly when added together.",
         hintOnRetry: "What happens when you add +y and -y together?",
       },
-      engineUsed: "Gemma 4 Edge (Local Offline)",
+      engineUsed: "Built-in offline helper (no AI)",
       voiceNoteAttached: cleanVoice || undefined,
       scannedImagePreview,
     };
@@ -420,7 +420,7 @@ export function solveWithLocalGemmaEdge(
         hintOnRetry:
           "Think about 2 < 5: if you multiply both sides by -1, you get -2 and -5. Which one is bigger?",
       },
-      engineUsed: "Gemma 4 Edge (Local Offline)",
+      engineUsed: "Built-in offline helper (no AI)",
       voiceNoteAttached: cleanVoice || undefined,
       scannedImagePreview,
     };
@@ -484,7 +484,7 @@ export function solveWithLocalGemmaEdge(
           "Brilliant! 3 × 5 = 15. Recognizing 3-4-5 multiples saves tons of time on exams!",
         hintOnRetry: "Multiply each side of (3, 4, 5) by 3!",
       },
-      engineUsed: "Gemma 4 Edge (Local Offline)",
+      engineUsed: "Built-in offline helper (no AI)",
       voiceNoteAttached: cleanVoice || undefined,
       scannedImagePreview,
     };
@@ -545,7 +545,7 @@ export function solveWithLocalGemmaEdge(
         hintOnRetry:
           "Remember that an equation is a balance scale—the left side should equal the right side!",
       },
-      engineUsed: "Gemma 4 Edge (Local Offline)",
+      engineUsed: "Built-in offline helper (no AI)",
       voiceNoteAttached: cleanVoice || undefined,
       scannedImagePreview,
     };
@@ -607,7 +607,7 @@ export function solveWithLocalGemmaEdge(
               "Spot on! Grouping symbols and exponents always take top priority.",
             hintOnRetry: "Remember P-E-M-D-A-S!",
           },
-          engineUsed: "Gemma 4 Edge (Local Offline)",
+          engineUsed: "Built-in offline helper (no AI)",
           voiceNoteAttached: cleanVoice || undefined,
           scannedImagePreview,
         };
@@ -663,7 +663,7 @@ export function solveWithLocalGemmaEdge(
         "Yes! Keeping the equation balanced is the heart of algebra.",
       hintOnRetry: "Think of the equals sign like a balanced seesaw!",
     },
-    engineUsed: "Gemma 4 Edge (Local Offline)",
+    engineUsed: "Built-in offline helper (no AI)",
     voiceNoteAttached: cleanVoice || undefined,
     scannedImagePreview,
   };

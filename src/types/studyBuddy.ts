@@ -46,6 +46,7 @@ export interface MathSolution {
   steps: SolutionStep[];
   comprehensionCheck: ComprehensionCheck;
   engineUsed: string;
+  practice?: Array<{ question: string; answer?: string }>;
   voiceNoteAttached?: string;
   scannedImagePreview?: string;
 }
@@ -82,7 +83,15 @@ export interface ChatMessage {
   spokenSummary?: string;
   attachmentPreview?: string;
   attachmentName?: string;
+  attachments?: string[];
+  practice?: Array<{ question: string; answer?: string }>;
   readingAnalysis?: ReadingAnalysis;
+  /** Placeholder reply while the AI works; replaced in place (same id) when the answer arrives. */
+  pending?: boolean;
+  /** id of the user message this reply answers. */
+  replyTo?: string;
+  /** Free browser tools on toolsontab.com suggested for this answer. */
+  toolLinks?: { title: string; url: string; category: string }[];
 }
 
 export interface ReadingPreset {
