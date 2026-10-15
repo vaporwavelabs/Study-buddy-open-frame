@@ -1,11 +1,6 @@
 {
-  "name": "Remix Study Buddy open frame ",
-  "description": "An offline, AI-powered harness that uses camera scanning and expressive voice interaction to provide intuitive response based on user frame design , user ",
-  "requestFramePermissions": [
-    "camera",
-    "microphone"
-  ],
-  "majorCapabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
+  "name": "Study Buddy",
+  "description": "Step-by-step homework helper running on local LLMs (Ollama). Adults 18+.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": []
 }
