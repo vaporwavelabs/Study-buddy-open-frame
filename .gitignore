@@ -6,3 +6,8 @@ coverage/
 *.log
 .env*
 !.env.example
+.llm-provider.json
+/data/
+.env
+.llm-provider.json
+draftboard-dist/

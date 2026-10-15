@@ -1,0 +1,25 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: No cloud LLM SDKs
+        run: |
+          if grep -q '"@google/genai"' package.json; then echo "@google/genai must not be a dependency"; exit 1; fi
+      - run: npx tsc --noEmit -p .
+      - run: npm test
+      - run: npx vite build
+      - run: npm audit --omit=dev --audit-level=high
